@@ -3,12 +3,13 @@ int NUM_ROWS = 20;
 int NUM_COLS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines = new ArrayList <MSButton>(); //ArrayList of just the minesweeper buttons that are mined
-
+PImage img;
 void setup ()
 {
     size(400, 400);
     textAlign(CENTER,CENTER);
-    
+    String url = "https://t3.ftcdn.net/jpg/03/12/54/80/360_F_312548010_JsXZ9vxIXTbgZlDr1IwlMTogrN84BN1L.jpg";
+    img = loadImage(url, "png");
     // make the manager
     Interactive.make( this );
  buttons = new MSButton[NUM_ROWS][NUM_COLS];
@@ -17,7 +18,7 @@ void setup ()
       buttons[j][i]=new MSButton(j,i); 
      }
     }
-    setMines();
+setMines();
    
 }
 public void setMines()
@@ -37,6 +38,7 @@ public void draw ()
         displayWinningMessage();
     if(isLost() == true)
         displayLosingMessage();
+        image(img, 0, 0);
 }
 public boolean isWon()
 {
@@ -59,21 +61,27 @@ public boolean isLost()
 }
 public void displayLosingMessage()
 {
+
     for(int i = 0; i < NUM_ROWS; i++){
       for(int j = 0; j < NUM_COLS; j++){
         buttons[i][j].setLabel("");
         if(mines.contains(buttons[i][j]) && buttons[i][j].clicked == false)
           buttons[i][j].mousePressed();
-          }
+
+        
+        }
+         
+          
     }
     noLoop();
 }
 public void displayWinningMessage()
 {
+  image(img, 0, 0,400,400);
     for(int i = 0; i < NUM_ROWS; i++)
       for(int j = 0; j < NUM_COLS; j++)
-        buttons[i][j].setLabel(":)");
-    noLoop();
+        buttons[i][j].setLabel("GG");
+
 }
 public boolean isValid(int r, int c)
 {
@@ -153,9 +161,9 @@ public class MSButton
          else if( clicked && mines.contains(this) ) 
              fill(255,0,0);
         else if(clicked)
-            fill( 200 );
+            fill( color(249,213,115) );
         else 
-            fill( 100 );
+            fill( color(153,255,71) );
 
         rect(x, y, width, height);
         fill(0);
